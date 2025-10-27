@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   description: "Train your blindfold chess",
 };
 
+import { Toaster } from "@/src/components/ui/sonner"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,7 +37,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <main>{children}</main>
+          <Toaster/>
         </ThemeProvider>
       </body>
     </html>

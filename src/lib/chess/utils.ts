@@ -1,5 +1,5 @@
-const RANKS = [1,2,3,4,5,6,7,8]
-const FILES = ["a", "b", "c", "d", "e", "f", "g", "h"]
+import { FILES, RANKS } from "./constants";
+import { FileType, RankType } from "./types";
 
 function isLightSquare(file:string, rank:number):boolean {
     const fileIndex = file.charCodeAt(0) - 'a'.charCodeAt(0);
@@ -13,22 +13,39 @@ function isValidSquare(file:string, rank:number): boolean{
     return true
 }
 
-function generateSquarePrompt(files: string[], ranks:number[]): string{
-    if((ranks.length > 8 || ranks.length < 1) || ranks.some( (rank) => rank < 0 || rank > 8 ) || files.some( (file) => !FILES.includes(file) || files.length > 8 || files.length < 1)){
-        throw new Error("Invalid co-ordinates")
-    }
+// let availableSquares: string[] = [];
 
-    else{
-        const filePrompt = files[Math.floor(Math.random()*files.length)]
-        const rankPrompt = String(ranks[Math.floor(Math.random()*ranks.length)])
-        return filePrompt+rankPrompt
-    }
-}
+// function generateSquarePrompt(files: FileType[], ranks: RankType[]): string {
+//   if (
+//     ranks.length < 1 ||
+//     ranks.length > 8 ||
+//     ranks.some((rank) => rank < 1 || rank > 8) ||
+//     files.length < 1 ||
+//     files.length > 8 ||
+//     files.some((file) => !FILES.includes(file))
+//   ) {
+//     throw new Error("Invalid coordinates");
+//   }
+
+//   if (availableSquares.length === 0) {
+//     availableSquares = files.flatMap((file) =>
+//       ranks.map((rank) => `${file}${rank}`)
+//     );
+
+//     // Fisher–Yates shuffle
+//     for (let i = availableSquares.length - 1; i > 0; i--) {
+//       const j = Math.floor(Math.random() * (i + 1));
+//       [availableSquares[i], availableSquares[j]] = [availableSquares[j], availableSquares[i]];
+//     }
+//   }
+
+//   return availableSquares.pop()!;
+// }
 
 export {
     isLightSquare,
     isValidSquare,
-    generateSquarePrompt,
+    // generateSquarePrompt,
     RANKS,
     FILES
 }

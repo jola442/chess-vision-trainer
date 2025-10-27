@@ -4,15 +4,17 @@ import { isLightSquare, RANKS, FILES } from "@/src/lib/chess/utils";
 interface SquareGuessBoardProps {
   isVisible?: boolean;
   highlightedSquares?: string[];
+  showWhiteBoard?: boolean
 }
 
-const ranks = [...RANKS].reverse()
 
 
-export default function SquareGuessBoard({ isVisible, highlightedSquares = [] }: SquareGuessBoardProps) {
+export default function SquareGuessBoard({ isVisible, highlightedSquares = [], showWhiteBoard = true }: SquareGuessBoardProps) {
   // const handleClick = (file: string, rank: number) => {
   //   const square = `${file}${rank}`;
   // };
+  const ranks = showWhiteBoard? [...RANKS].reverse() : [...RANKS]
+
 
   return (
     <div className="relative w-[300px] h-[300px] md:w-[420px] md:h-[420px]">
