@@ -54,7 +54,21 @@ content: [
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
-  		}
+  		},
+
+			keyframes: {
+	pulseGlow: {
+	'0%, 100%': {
+		boxShadow: '0 0 8px 2px rgba(59,130,246,0.6)',
+	},
+	'50%': {
+		boxShadow: '0 0 16px 6px rgba(59,130,246,0.9)',
+	},
+	},
+},
+animation: {
+	pulseGlow: 'pulseGlow 1.5s ease-in-out infinite',
+},
   	}
   },
   fontFamily: {
@@ -62,6 +76,8 @@ content: [
 	serif: ["var(--font-serif)"],
 	mono: ["JetBrains Mono", "var(--font-mono)"],
   },
+
   plugins: [require("tailwindcss-animate")],
+  
 }
 

@@ -13,12 +13,12 @@ import { ModeToggle } from "@/src/components/ui/mode-toggle";
 export default function Navbar() {
   return (
     <nav className="border-solid-border bg-secondary text-foreground h-[68px]">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between gap-4 flex-wrap">
+      <div className="container mx-auto px-4 py-4 flex-nowrap">
+        <div className="flex items-center justify-between gap-4 flex-nowrap">
           {/* Logo / Branding */}
           <div className="flex items-center gap-2">
             <Link href="/home">
-            <h1 className="md:text-xl font-bold text-secondary-foreground">
+            <h1 className="text-sm md:text-xl font-bold text-secondary-foreground">
               ♟ ChessVision Trainer
             </h1>     
             </Link>
