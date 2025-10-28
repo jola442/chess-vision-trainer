@@ -9,6 +9,8 @@ import {
   NavigationMenuList,
 } from "@/src/components/ui/navigation-menu";
 import { ModeToggle } from "@/src/components/ui/mode-toggle";
+import Image from "next/image";
+import Logo from "@/public/logo.svg"; // your SVG file
 
 export default function Navbar() {
   return (
@@ -16,13 +18,16 @@ export default function Navbar() {
       <div className="container mx-auto px-4 py-4 flex-nowrap">
         <div className="flex items-center justify-between gap-4 flex-nowrap">
           {/* Logo / Branding */}
-          <div className="flex items-center gap-2">
-            <Link href="/home">
-            <h1 className="text-sm md:text-xl font-bold text-secondary-foreground">
-              ♟ ChessVision Trainer
-            </h1>     
+          <div className="flex items-center">
+            <Link href="/home" aria-label="Go to homepage">
+              <Image
+                src={Logo}
+                alt="Logo"
+                width={120} // adjust width
+                height={32} // adjust height
+                className="object-contain"
+              />
             </Link>
-
           </div>
 
           {/* Navigation Links + CTA */}
@@ -38,14 +43,8 @@ export default function Navbar() {
                     { href: "#about", label: "About" },
                   ].map((item) => (
                     <NavigationMenuItem key={item.href}>
-                      <NavigationMenuLink
-                        asChild
-                      >
-                        <a
-                          href={item.href}
-                        >
-                          {item.label}
-                        </a>
+                      <NavigationMenuLink asChild>
+                        <a href={item.href}>{item.label}</a>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}

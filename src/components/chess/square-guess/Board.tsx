@@ -1,5 +1,8 @@
 "use client"
+
 import { isLightSquare, RANKS, FILES } from "@/src/lib/chess/utils";
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/src/components/ui/skeleton"
 
 interface SquareGuessBoardProps {
   isVisible?: boolean;
@@ -9,17 +12,30 @@ interface SquareGuessBoardProps {
 
 
 
+
 export default function SquareGuessBoard({ isVisible, highlightedSquares = [], showWhiteBoard = true }: SquareGuessBoardProps) {
-  // const handleClick = (file: string, rank: number) => {
-  //   const square = `${file}${rank}`;
-  // };
-  const ranks = showWhiteBoard? [...RANKS].reverse() : [...RANKS]
+  const [mounted, setMounted] = useState(false);
+
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted){
+    return (
+      <Skeleton className=" w-[300px] h-[300px] md:w-[420px] md:h-[420px]"/>
+    )
+  }; // skip rendering on server
+
+  const ranks = showWhiteBoard ? [...RANKS].reverse() : [...RANKS]
+
+
 
 
   return (
     <div className="relative w-[300px] h-[300px] md:w-[420px] md:h-[420px]">
       <div
-        className={`grid grid-cols-8 border border-border w-full h-full transition-opacity duration-500
+        className={`grid grid-cols-8 border border-border w-full h-full transition-opacity duration-500 rounded-lg
           ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       >
         {ranks.map((rank) =>

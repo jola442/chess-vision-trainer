@@ -19,6 +19,8 @@ export const metadata: Metadata = {
 };
 
 import { Toaster } from "@/src/components/ui/sonner"
+import Navbar from "@/src/components/navbar";
+
 
 export default function RootLayout({
   children,
@@ -37,6 +39,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Navbar />
           <main>{children}</main>
           <Toaster/>
         </ThemeProvider>
