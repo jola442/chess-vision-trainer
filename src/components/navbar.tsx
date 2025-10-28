@@ -9,26 +9,46 @@ import {
   NavigationMenuList,
 } from "@/src/components/ui/navigation-menu";
 import { ModeToggle } from "@/src/components/ui/mode-toggle";
-import Image from "next/image";
-import Logo from "@/public/logo.svg"; // your SVG file
+
+
+type Props = React.SVGProps<SVGSVGElement> & {
+  className?: string;
+};
+
+function Logo({ className = "h-8 w-auto text-black dark:text-white", ...props }: Props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 100 100"
+      className={className}
+      fill="currentColor"
+      {...props}
+    >
+      <circle cx="50" cy="18.280" r="13.530" />
+      <path d="M81.143 89.937a5.151 5.151 0 01-5.151 5.151H24.008a5.151 5.151 0 01-5.151-5.151 5.151 5.151 0 015.151-5.151h51.984a5.151 5.151 0 015.151 5.151z" />
+      <path d="M69.046 50.006a3.845 3.845 0 01-3.846 3.843H34.797a3.845 3.845 0 01-3.843-3.843 3.845 3.845 0 013.843-3.844h30.403a3.845 3.845 0 013.846 3.844z" />
+      <path d="M70.968 39.216a3.844 3.844 0 01-3.845 3.843H32.875a3.844 3.844 0 01-3.843-3.843 3.844 3.844 0 013.843-3.845h34.248a3.844 3.844 0 013.845 3.845z" />
+      <path d="M27.885 81.862c11.995-8.386 8.456-24.828 8.456-24.828h27.059s-2.638 16.114 8.714 24.828H27.885z" />
+    </svg>
+  );
+}
+
 
 export default function Navbar() {
   return (
     <nav className="border-solid-border bg-secondary text-foreground h-[68px]">
       <div className="container mx-auto px-4 py-4 flex-nowrap">
         <div className="flex items-center justify-between gap-4 flex-nowrap">
-          {/* Logo / Branding */}
-          <div className="flex items-center">
-            <Link href="/home" aria-label="Go to homepage">
-              <Image
-                src={Logo}
-                alt="Logo"
-                width={120} // adjust width
-                height={32} // adjust height
-                className="object-contain"
-              />
-            </Link>
-          </div>
+       <Link href="/home" className="flex items-end gap-1 group">
+          <Logo className="h-8 w-auto text-primary transition-transform group-hover:scale-105 duration-200" />
+          <span className="text-xl font-bold tracking-tight">
+            <span className="text-foreground/90">Chess</span>
+            <span className="text-muted-foreground group-hover:text-foreground transition-colors">
+              Vision
+            </span>
+          </span>
+        </Link>
+
 
           {/* Navigation Links + CTA */}
           <div className="flex items-center gap-6 font-medium">
@@ -43,8 +63,14 @@ export default function Navbar() {
                     { href: "#about", label: "About" },
                   ].map((item) => (
                     <NavigationMenuItem key={item.href}>
-                      <NavigationMenuLink asChild>
-                        <a href={item.href}>{item.label}</a>
+                      <NavigationMenuLink
+                        asChild
+                      >
+                        <a
+                          href={item.href}
+                        >
+                          {item.label}
+                        </a>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}

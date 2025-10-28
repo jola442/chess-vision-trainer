@@ -1,6 +1,5 @@
 "use client"
 
-import Navbar from "@/src/components/navbar";
 import SquareGuessBoard from "@/src/components/chess/square-guess/Board";
 import { Button } from "@/src/components/ui/button";
 import { Settings, BadgeCheckIcon, BadgeX } from "lucide-react";
