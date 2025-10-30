@@ -15,7 +15,7 @@ type Props = React.SVGProps<SVGSVGElement> & {
   className?: string;
 };
 
-function Logo({ className = "h-8 w-auto text-black dark:text-white", ...props }: Props) {
+function Logo({ className = "h-8 w-auto text-foreground", ...props }: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -36,37 +36,35 @@ function Logo({ className = "h-8 w-auto text-black dark:text-white", ...props }:
 
 export default function Navbar() {
   return (
-    <nav className="border-solid-border bg-secondary text-foreground h-[68px]">
+    <nav className="border-solid-border bg-card-background text-foreground h-[68px]">
       <div className="container mx-auto px-4 py-4 flex-nowrap">
         <div className="flex items-center justify-between gap-4 flex-nowrap">
-       <Link href="/home" className="flex items-end gap-1 group">
-          <Logo className="h-8 w-auto text-primary transition-transform group-hover:scale-105 duration-200" />
-          <span className="text-xl font-bold tracking-tight">
-            <span className="text-foreground/90">Chess</span>
-            <span className="text-muted-foreground group-hover:text-foreground transition-colors">
-              Vision
+          <Link href="/home" className="flex items-end gap-1 group">
+            <Logo className="h-8 w-auto text-primary transition-transform group-hover:scale-105 duration-200" />
+            <span className="text-xl font-bold tracking-tight">
+              <span className="text-foreground/90 text-2xl">Chess</span>
+              <span className="dark:text-muted-foreground text-gray-500">
+                Vision
+              </span>
             </span>
-          </span>
-        </Link>
+          </Link>
 
 
-          {/* Navigation Links + CTA */}
           <div className="flex items-center gap-6 font-medium">
-            {/* Desktop links */}
             <div className="hidden md:flex items-center gap-6">
               <NavigationMenu>
                 <NavigationMenuList className="flex gap-6">
                   {[
-                    { href: "#home", label: "Home" },
+                    { href: "/", label: "Home" },
                     // { href: "#practice", label: "Practice" },
                     // { href: "#leaderboard", label: "Leaderboard" },
-                    { href: "#about", label: "About" },
+                    { href: "/#about", label: "About" },
                   ].map((item) => (
                     <NavigationMenuItem key={item.href}>
                       <NavigationMenuLink
                         asChild
                       >
-                        <a
+                        <a className="font-bold text-lg"
                           href={item.href}
                         >
                           {item.label}
@@ -78,12 +76,12 @@ export default function Navbar() {
               </NavigationMenu>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-6">
               <ModeToggle />
               <Link href="/train">
                 <Button
-                  variant="default"
-                  size="default"
+                  variant="secondary"
+                  size="lg"
                   data-testid="button-start-training"
                 >
                   Start Training

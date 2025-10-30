@@ -7,3 +7,9 @@ export const KEY_SQUARE_SETS = {
   "Fianchetto": ["b2", "g2", "b7", "g7"],
   "Weak Squares": ["f2", "f7"],
 };
+
+export const WHITE_LEFT_FILES = ["a", "b", "c", "d"]
+export const WHITE_RIGHT_FILES = ["e", "f", "g", "h"]
+export const WHITE_TOP_RANKS = [8, 7, 6, 5]
+export const WHITE_BOTTOM_RANKS = [1, 2, 3, 4]
+

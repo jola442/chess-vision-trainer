@@ -14,13 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Chess Vision Trainer",
+  title: "ChessVision - See The Board In Your Head",
   description: "Train your blindfold chess",
 };
 
 import { Toaster } from "@/src/components/ui/sonner"
 import Navbar from "@/src/components/navbar";
-
 
 export default function RootLayout({
   children,
@@ -29,7 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -41,9 +42,10 @@ export default function RootLayout({
         >
           <Navbar />
           <main>{children}</main>
-          <Toaster/>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
   );
 }
+

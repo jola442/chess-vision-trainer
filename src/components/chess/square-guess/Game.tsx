@@ -2,7 +2,7 @@
 
 import SquareGuessBoard from "@/src/components/chess/square-guess/Board";
 import { Button } from "@/src/components/ui/button";
-import { Settings, BadgeCheckIcon, BadgeX } from "lucide-react";
+import { Settings, BadgeCheckIcon, BadgeX, Eye } from "lucide-react";
 import {
   Item,
   ItemContent,
@@ -35,7 +35,7 @@ import { FILES, RANKS, isLightSquare } from "@/src/lib/chess/utils";
 import { useLocalStorage } from "usehooks-ts";
 import { FileType, RankType, Square, SquareGuesserSettings } from "@/src/lib/chess/types";
 import { toast } from "sonner"
-import { KEY_SQUARE_SETS } from "@/src/lib/chess/constants";
+import { KEY_SQUARE_SETS, WHITE_BOTTOM_RANKS, WHITE_LEFT_FILES, WHITE_RIGHT_FILES, WHITE_TOP_RANKS } from "@/src/lib/chess/constants";
 import SquareGuessSkeleton from "./GameSkeleton";
 
 const settingTabs = {
@@ -44,10 +44,43 @@ const settingTabs = {
 } as const;
 
 type SettingTabType = keyof typeof settingTabs;
+// type RanksAndFilesType = (RankType | FileType)[] 
 
 type GenerateSquareArgs = 
   | { squares: Square[] } 
   | { files: FileType[], ranks: RankType[] };
+
+const sections = [
+  "Top Half",
+  "Bottom Half",
+  "Top Left",
+  "Top Right",
+  "Bottom Left",
+  "Bottom Right",
+] as const;
+
+export type SectionType = typeof sections[number];
+
+export const whiteSections: Record<SectionType, (string | number)[]> = {
+  "Top Half": [...WHITE_TOP_RANKS, ...WHITE_LEFT_FILES, ...WHITE_RIGHT_FILES],
+  "Bottom Half": [...WHITE_BOTTOM_RANKS, ...WHITE_LEFT_FILES, ...WHITE_RIGHT_FILES],
+  "Top Left": [...WHITE_TOP_RANKS, ...WHITE_LEFT_FILES],
+  "Top Right": [...WHITE_TOP_RANKS, ...WHITE_RIGHT_FILES],
+  "Bottom Left": [...WHITE_BOTTOM_RANKS, ...WHITE_LEFT_FILES],
+  "Bottom Right": [...WHITE_BOTTOM_RANKS, ...WHITE_RIGHT_FILES],
+};
+
+export const blackSections: Record<SectionType, (string | number)[]> = {
+  "Top Half": whiteSections["Bottom Half"],
+  "Bottom Half": whiteSections["Top Half"],
+  "Top Left": whiteSections["Bottom Right"],
+  "Top Right": whiteSections["Bottom Left"],
+  "Bottom Left": whiteSections["Top Right"],
+  "Bottom Right": whiteSections["Bottom Left"]
+};
+
+
+
 
 export default function SquareGuessGame() {
   const [mounted, setMounted] = useState(false);
@@ -71,6 +104,7 @@ const [savedSettings, setSavedSettings] = useLocalStorage<SquareGuesserSettings>
   }
 );
 
+
 const [squareGuesserSettings, setSquareGuesserSettings] = useState<SquareGuesserSettings>(() => {
   return savedSettings || {
     files: [...FILES],
@@ -93,11 +127,11 @@ function generateSquarePrompt(args: GenerateSquareArgs): string {
   }
 
   // Refill availableSquares if empty or has only the last used square
-  if (availableSquaresRef.current.length === 0 || (availableSquaresRef.current.length === 1 && availableSquaresRef.current[0] === lastSquareRef.current)) {
+  if (availableSquaresRef.current?.length === 0 || (availableSquaresRef.current?.length === 1 && availableSquaresRef.current[0] === lastSquareRef.current)) {
     availableSquaresRef.current = pool;
     
     // Fisher-Yates shuffle
-    for (let i = availableSquaresRef.current.length - 1; i > 0; i--) {
+    for (let i = availableSquaresRef.current?.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [availableSquaresRef.current[i], availableSquaresRef.current[j]] =
         [availableSquaresRef.current[j], availableSquaresRef.current[i]];
@@ -105,7 +139,7 @@ function generateSquarePrompt(args: GenerateSquareArgs): string {
   }
 
   // Pick next square, avoiding consecutive repeat if possible
-  let nextSquare = availableSquaresRef.current.pop()!;
+  let nextSquare = availableSquaresRef.current?.pop()!;
   if (nextSquare === lastSquareRef.current && availableSquaresRef.current.length > 0) {
     availableSquaresRef.current.unshift(nextSquare); // put it back
     nextSquare = availableSquaresRef.current.pop()!;
@@ -277,12 +311,24 @@ useEffect(() => {
                     <Tabs defaultValue={activeTab} onValueChange={(val) => setActiveTab(val as SettingTabType)}>
                       <TabsList>
                         <TabsTrigger value="coordinates">Coordinates</TabsTrigger>
-                        {/* <TabsTrigger value="sections">Sections</TabsTrigger> */}
                         <TabsTrigger value="key-squares">Key Squares</TabsTrigger>
                       </TabsList>
                       <TabsContent value="coordinates">
                     <Item variant="muted" className="mt-5">
                       <ItemContent>
+                      {/* <ItemTitle className="mb-2 font-bold">Sections</ItemTitle>
+                        <div className="grid grid-cols-4 gap-2 mb-5">
+                          {sections.map((section) => (
+                            <div key={section} className="flex items-center gap-2">
+                              <Checkbox
+                                checked={squareGuesserSettings.showWhiteBoard? whiteSections[section].some( (sec) )}
+                                id={String(section)}
+                                onCheckedChange={(checked) => handleSectionCheckboxClicked(section, checked)}
+                              />
+                              <Label htmlFor={String(section)}>{section}</Label>
+                            </div>
+                          ))}
+                        </div> */}
                         <ItemTitle className="mb-2 font-bold">Ranks</ItemTitle>
                         <div className="grid grid-cols-4 gap-2 mb-5">
                           {RANKS.map((rank) => (
@@ -398,14 +444,13 @@ useEffect(() => {
             </div>
 
             <div className="relative flex justify-center w-full md:max-w-lg h-16 mx-auto">
-              <Item
-                variant="muted"
+              <Item variant="none"
                 size="sm"
                 asChild
                 className={`absolute top-0 left-0 w-full flex self-center justify-center transition-opacity duration-500
                   ${showCorrectFeedback ? "opacity-100" : "opacity-0 pointer-events-none"}`}
               >
-                <div className="flex flex-row items-center justify-center gap-2 bg-green-300/50 text-green-700 dark:bg-green-900/30 dark:text-green-400 p-2 rounded">
+                <div className="flex flex-row items-center justify-center gap-2 bg-green-300/30 text-green-700 dark:bg-green-900/30 dark:text-green-400 p-2 rounded">
                   <ItemMedia>
                     <BadgeCheckIcon className="size-5" />
                   </ItemMedia>
@@ -415,8 +460,7 @@ useEffect(() => {
                 </div>
               </Item>
 
-              <Item
-                variant="muted"
+              <Item variant="none"
                 size="sm"
                 asChild
                 className={`absolute top-0 left-0 w-full flex justify-center transition-opacity duration-500
