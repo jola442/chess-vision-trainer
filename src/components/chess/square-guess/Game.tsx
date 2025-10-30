@@ -228,29 +228,6 @@ function handleSaveChanges() {
   toast.success(`Your changes have been saved`);
 }
 
-
-
-useEffect(() => {
-  let squarePromptInput: GenerateSquareArgs;
-
-  if (savedSettings.squares?.length) {
-    squarePromptInput = { squares: savedSettings.squares };
-  } else if (savedSettings.files?.length || savedSettings.ranks?.length) {
-    squarePromptInput = { files: savedSettings.files, ranks: savedSettings.ranks };
-  } else {
-    squarePromptInput = { files: [...FILES], ranks: [...RANKS] };
-  }
-
-  setSquare(generateSquarePrompt(squarePromptInput));
-  setSquareGuesserSettings(savedSettings)
-}, [
-  savedSettings.files,
-  savedSettings.ranks,
-  savedSettings.squares,
-  savedSettings.showWhiteBoard,
-]);
-
-
   useEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -259,7 +236,7 @@ useEffect(() => {
 
   useEffect(() => {
     setMounted(true);
-    setSquare(generateSquarePrompt({files:[...FILES], ranks: [...RANKS]}))
+    setSquare(generateSquarePrompt({files:squareGuesserSettings.files ?? [...FILES], ranks: squareGuesserSettings.ranks ?? [...RANKS]}))
   }, []);
 
   if(!mounted){

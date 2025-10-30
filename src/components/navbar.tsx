@@ -79,7 +79,7 @@ export default function Navbar() {
 
             <div className="flex items-center gap-6">
               <ModeToggle />
-              <Link href="/train">
+              <Link href="/drills">
                 <Button
                   variant="default"
                   size="default"

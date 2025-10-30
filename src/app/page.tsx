@@ -14,6 +14,10 @@ import {
 import { Badge } from "@/src/components/ui/badge";
 import Link from "next/link";
 import { Palette, Brain, FlaskConical } from "lucide-react";
+import Image from "next/image";
+import ChessArrows from "@/public/ChessArrows.png"
+import Blunder from "@/public/Blunder.jpeg"
+import Calculate from "@/public/Calculate.jpg"
 
 const process = [
   {
@@ -100,7 +104,7 @@ export default function LandingPage() {
     className="text-4xl md:text-6xl font-extrabold mb-4 flex gap-4 z-10"
   >
     <Button asChild size="lg">
-      <Link href="#process">Start Training</Link>
+      <Link href="/drills/square-guesser">Start Training</Link>
     </Button>
     <Button asChild size="lg" variant="outline">
       <Link href="#about">Learn More</Link>
@@ -144,20 +148,100 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="px-6 py-20 max-w-4xl mx-auto text-center">
-        <h3 className="text-3xl font-bold mb-6">About ChessVision</h3>
-        <p className="text-muted-foreground text-lg mb-4">
-          ChessVision is built to train your ability to visualize the chessboard — even when it’s not in front of you.
-          Improve your pattern recognition, board memory, and reaction time through focused mini-games.
-        </p>
-        {/* <p className="text-sm text-muted-foreground">
-          Free for now. Ads may be added later to support development. Premium features coming soon.
-        </p> */}
-        <div className="mt-8">
-          <Badge variant="outline">Made with ♟️ by Jola Ajayi</Badge>
-        </div>
-      </section>
+<section id="why" className="px-6 py-20 mx-auto max-w-6xl">
+  <h3 className="text-3xl font-bold mb-12 text-center">Why You Should Learn</h3>
+  <motion.div
+  className="grid grid-cols-1 lg:grid-cols-3 gap-10"
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.3 }}
+  variants={{
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2, // delay between each child
+      },
+    },
+  }}
+>
+  <motion.div
+    variants={{
+hidden: { opacity: 0, x: -50, y: 20 },
+visible: { opacity: 1, x: 0, y: 0 }
+
+    }}
+    transition={{ duration: 0.6, ease: "easeOut" }}
+    className="flex flex-col items-center text-center"
+  >
+      <div className="w-full rounded-xl overflow-hidden shadow-md mb-4">
+        <Image
+          src={Calculate}
+          alt="See patterns on the chessboard"
+          width={400}
+          height={300}
+          className="w-full h-auto object-cover"
+        />
+      </div>
+      <h4 className="text-xl font-semibold mb-2">Calculate Like a Grandmaster</h4>
+      <p className="text-muted-foreground">Calculate variations deeper and faster to have your opponents mashing the Report button</p>
+  </motion.div>
+
+  {/* Reason 2 */}
+  <motion.div
+    variants={{
+hidden: { opacity: 0, x: -50, y: 30 },
+visible: { opacity: 1, x: 0, y: 0 }
+
+    }}
+    transition={{ duration: 0.6, ease: "easeOut" }}
+    className="flex flex-col items-center text-center"
+  >
+      <div className="w-full rounded-xl overflow-hidden shadow-md mb-4">
+        <Image
+          src={ChessArrows}
+          alt="Play like a pro"
+          width={400}
+          height={300}
+          className="w-full h-auto object-cover"
+        />
+      </div>
+      <h4 className="text-xl font-semibold mb-2">Follow Chess Commentary</h4>
+      <p className="text-muted-foreground">When top players are explaining variations, you’ll actually see it in your mind instead of getting lost in the arrows..</p>
+  </motion.div>
+
+  {/* Reason 3 */}
+  <motion.div
+    variants={{
+hidden: { opacity: 0, x: -50, y: 40 },
+visible: { opacity: 1, x: 0, y: 0 }
+
+    }}
+    transition={{ duration: 0.6, ease: "easeOut" }}
+    className="flex flex-col items-center text-center"
+  >
+      <div className="w-full rounded-xl overflow-hidden shadow-md mb-4">
+        <Image
+          src={Blunder}
+          alt="Improve memory and cognition"
+          width={400}
+          height={300}
+          className="w-full h-auto object-cover"
+        />
+      </div>
+      <h4 className="text-xl font-semibold mb-2">Reduce One-Move Blunders</h4>
+      <p className="text-muted-foreground">No more playing like Stockfish for 20+ moves and blundering your Queen to a Bishop in the corner</p>
+    </motion.div>
+  </motion.div>
+  </section>
+
+
+
+
+
+
+
+
+
 
       {/* Footer */}
       <footer className="border-t text-center py-6 text-sm text-muted-foreground">
