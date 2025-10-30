@@ -13,12 +13,12 @@ import {
 } from "@/src/components/ui/card";
 import { Badge } from "@/src/components/ui/badge";
 import Link from "next/link";
-import { Palette, Brain, HatGlasses } from "lucide-react";
+import { Palette, Brain, FlaskConical } from "lucide-react";
 
-const games = [
+const process = [
   {
-    title: "Learn Square Colors",
-    desc: "Train your brain to instantly recognize whether any square on the chessboard is light or dark without looking at the board",
+    title: "Memorize Square Colors",
+    desc: "Start with a board that flashes individual squares and gives instant feedback. Focus on identifying whether a square is light or dark. No timer, no calculations, just learning.",
     href: "/square-guesser",
     icon: <Palette/>
   },
@@ -29,10 +29,10 @@ const games = [
     icon: <Brain/>
   },
   {
-    title: "Practice Blindfold Play",
-    desc: "Challenge yourself with blindfold mode. Hide the board completely and rely purely on mental visualization to answer questions.",
+    title: "Test Your Blindfold Skills",
+    desc: "Measure your progress by completing timed challenges that test your square and move recognition speed.",
     href: "/coordinate-clicker",
-    icon:<HatGlasses/>
+    icon:<FlaskConical/>
   },
 //   {
 //     title: "Piece Manoeuvre",
@@ -49,7 +49,7 @@ const fadeInUp = {
 export default function LandingPage() {
   return (
     <div className="page-container">
-<section className="relative flex flex-col items-center justify-center text-center flex-1 px-6 py-24 overflow-hidden h-full">
+<section className="relative flex flex-col items-center justify-center text-center flex-1 px-6 py-24 overflow-hidden h-3/4  lg:h-full">
   <motion.div
     className="absolute inset-0"
     initial={{ opacity: 0 }}
@@ -87,20 +87,20 @@ export default function LandingPage() {
   <motion.p
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: 0.2, duration: 0.6 }}
+    transition={{ delay: 0.6, duration: 0.6 }}
     className="text-lg text-muted-foreground max-w-2xl mb-8 z-10"
   >
-    Train your chess vision and pattern recognition with interactive games designed to sharpen your mind.
+    Train your chess vision and pattern recognition with interactive process designed to sharpen your mind.
   </motion.p>
 
     <motion.div
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 1 }}
-    className="text-4xl md:text-6xl font-extrabold mb-4 z-10 flex gap-4 z-10"
+    transition={{ delay:0.6, duration: 1 }}
+    className="text-4xl md:text-6xl font-extrabold mb-4 flex gap-4 z-10"
   >
     <Button asChild size="lg">
-      <Link href="#games">Start Training</Link>
+      <Link href="#process">Start Training</Link>
     </Button>
     <Button asChild size="lg" variant="outline">
       <Link href="#about">Learn More</Link>
@@ -114,38 +114,30 @@ export default function LandingPage() {
     variants={fadeInUp}
     initial="hidden"
     whileInView="visible"
-    viewport={{once:true}}
+    viewport={{once:true, amount:1}}
     transition={{ duration:0.5 }}
     className="text-3xl font-bold mb-6 z-10 text-center"
   >
     How it works
   </motion.h3>
         <div className="grid grid-cols-1 lg:grid-cols-3 justify-items-center place-items-center gap-6">
-          {games.map((game, i) => (
+          {process.map((process, i) => (
             <motion.div
-              key={game.title}
+              key={process.title}
               variants={fadeInUp}
               initial="hidden"
               whileInView="visible"
-              viewport={{once:true}}
-              transition={{ delay: i * 0.1, duration:0.5 }}
+              viewport={{once:true, amount:1}}
+              transition={{ delay: i * 0.3, duration:1 }}
             >
-              <Card className="hover:shadow-lg transition-shadow duration-300 border-none min-h-[35vh]"> 
+              <Card className="hover:shadow-lg transition-shadow duration-300 border-none lg:h-[275px] min-h-[35vh]"> 
                   <div className="relative top-4 left-5 mb-2 bg-muted w-fit p-3 rounded-xl">
-                    {game.icon}
+                    {process.icon}
                   </div>
                   <CardHeader>
-                    <CardTitle className="text-xl">{game.title}</CardTitle>
-                    <CardDescription className="text-lg">{game.desc}</CardDescription>
+                    <CardTitle className="text-xl">{process.title}</CardTitle>
+                    <CardDescription className="text-lg">{process.desc}</CardDescription>
                   </CardHeader>
-                {/* <ItemContent>
-                  <ItemTitle>{game.title}</ItemTitle>
-                  <ItemDescription>{game.desc}</ItemDescription>
-
-                  <Button asChild className="w-full">
-                    <Link href={game.href}>Play</Link>
-                  </Button>
-                </ItemContent> */}
               </Card>
             </motion.div>
           ))}

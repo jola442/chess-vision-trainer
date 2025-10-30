@@ -36,10 +36,11 @@ function Logo({ className = "h-8 w-auto text-foreground", ...props }: Props) {
 
 export default function Navbar() {
   return (
-    <nav className="border-solid-border bg-card-background text-foreground h-[68px]">
+<nav className="fixed top-0 left-0 w-full h-[68px] z-50 
+  bg-card-background/60 backdrop-blur-md">
       <div className="container mx-auto px-4 py-4 flex-nowrap">
         <div className="flex items-center justify-between gap-4 flex-nowrap">
-          <Link href="/home" className="flex items-end gap-1 group">
+          <Link href="/" className="flex items-end gap-1 group">
             <Logo className="h-8 w-auto text-primary transition-transform group-hover:scale-105 duration-200" />
             <span className="text-xl font-bold tracking-tight">
               <span className="text-foreground/90 text-2xl">Chess</span>
@@ -80,8 +81,8 @@ export default function Navbar() {
               <ModeToggle />
               <Link href="/train">
                 <Button
-                  variant="secondary"
-                  size="lg"
+                  variant="default"
+                  size="default"
                   data-testid="button-start-training"
                 >
                   Start Training

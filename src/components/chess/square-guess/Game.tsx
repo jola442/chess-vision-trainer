@@ -2,7 +2,7 @@
 
 import SquareGuessBoard from "@/src/components/chess/square-guess/Board";
 import { Button } from "@/src/components/ui/button";
-import { Settings, BadgeCheckIcon, BadgeX, Eye } from "lucide-react";
+import { Settings, BadgeCheckIcon, BadgeX, BadgeQuestionMark } from "lucide-react";
 import {
   Item,
   ItemContent,
@@ -203,8 +203,8 @@ function generateSquarePrompt(args: GenerateSquareArgs): string {
       setShowWrongFeedback(false);
       setOnCoolDown(false);
       let squarePromptInput = {} as GenerateSquareArgs;
-      if(savedSettings.files?.length !== 0 && savedSettings.ranks,length !== 0){
-        squarePromptInput = {files: savedSettings.files ?? [], ranks:savedSettings.ranks ?? []}
+      if(savedSettings.files?.length !== 0 || savedSettings.ranks?.length !== 0){
+        squarePromptInput = {files: savedSettings.files?.length && savedSettings.files?.length > 0? savedSettings.files: [...FILES], ranks:savedSettings.ranks?.length && savedSettings.ranks?.length > 0? savedSettings.ranks: [...RANKS]}
       }
 
       else if(savedSettings.squares?.length !== 0){
@@ -219,8 +219,8 @@ function handleSaveChanges() {
   const newSettings = {
     ...squareGuesserSettings,
     squares: activeTab === "coordinates" ? [] : squareGuesserSettings.squares,
-    files: activeTab === "key-squares" ? [] : squareGuesserSettings.files,
-    ranks: activeTab === "key-squares" ? [] : squareGuesserSettings.ranks,
+    files: activeTab === "key-squares" ? [] : squareGuesserSettings.files &&  squareGuesserSettings.files.length > 0 ? squareGuesserSettings.files: [...FILES],
+    ranks: activeTab === "key-squares" ? [] : squareGuesserSettings.ranks && squareGuesserSettings.ranks.length > 0 ? squareGuesserSettings.ranks: [...RANKS],
   };
 
   setSavedSettings(newSettings);
@@ -235,7 +235,7 @@ useEffect(() => {
 
   if (savedSettings.squares?.length) {
     squarePromptInput = { squares: savedSettings.squares };
-  } else if (savedSettings.files?.length && savedSettings.ranks?.length) {
+  } else if (savedSettings.files?.length || savedSettings.ranks?.length) {
     squarePromptInput = { files: savedSettings.files, ranks: savedSettings.ranks };
   } else {
     squarePromptInput = { files: [...FILES], ranks: [...RANKS] };
@@ -280,9 +280,13 @@ useEffect(() => {
 
           <div className="flex flex-1 md:max-w-[40%] flex-col md:gap-10 gap-4">
             <div className="flex items-center md:justify-around md:gap-20 justify-between">
-              <h2 className="text-lg font-bold text-secondary-foreground lg:w-1/2 select-none">
-                Square Color Drill
-              </h2>
+              <div className="flex lg:w-1/2 gap-2 items-center">
+              <BadgeQuestionMark/>
+                <h2 className="text-lg lg:text-xl font-bold text-secondary-foreground  select-none">
+                  Square Guesser Drill
+                </h2>
+              </div>
+  
 
               <Sheet open={isSettingsOpen} onOpenChange={(open) => {
                 if(!open){
