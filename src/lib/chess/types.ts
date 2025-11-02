@@ -8,6 +8,10 @@ export type Square = `${FileType}${RankType}` | `${Uppercase<FileType>}${RankTyp
 export interface SquareGuesserSettings {
   files?: FileType[],
   ranks?: RankType[],
-  showWhiteBoard: boolean,
+  toggles: {
+    flipBoard?: boolean,
+    showCoordinates?: boolean,
+    showBoard?: boolean
+  },
   squares?: Square[],
 }

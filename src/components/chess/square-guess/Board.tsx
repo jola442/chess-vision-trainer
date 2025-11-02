@@ -6,14 +6,15 @@ import { Skeleton } from "@/src/components/ui/skeleton"
 
 interface SquareGuessBoardProps {
   isVisible?: boolean;
+  isCoordinatesVisible?:boolean
   highlightedSquares?: string[];
-  showWhiteBoard?: boolean
+  flipBoard?: boolean
 }
 
 
 
 
-export default function SquareGuessBoard({ isVisible, highlightedSquares = [], showWhiteBoard = true }: SquareGuessBoardProps) {
+export default function SquareGuessBoard({ isVisible = true, highlightedSquares = [], flipBoard = false, isCoordinatesVisible = true }: SquareGuessBoardProps) {
   const [mounted, setMounted] = useState(false);
 
 
@@ -23,11 +24,11 @@ export default function SquareGuessBoard({ isVisible, highlightedSquares = [], s
 
   if (!mounted){
     return (
-      <Skeleton className=" w-[300px] h-[300px] md:w-[420px] md:h-[420px]"/>
+      <Skeleton className=" w-[300px] h-[300px] lg:w-[420px] lg:h-[420px]"/>
     )
   };
 
-  const ranks = showWhiteBoard ? [...RANKS].reverse() : [...RANKS]
+  const ranks = flipBoard ? [...RANKS] : [...RANKS].reverse();
 
 
 
@@ -35,7 +36,7 @@ export default function SquareGuessBoard({ isVisible, highlightedSquares = [], s
   return (
     <div className="relative w-[300px] h-[300px] md:w-[420px] md:h-[420px] select-none">
       <div
-        className={`grid grid-cols-8 border border-border w-full h-full transition-opacity duration-500 rounded-lg
+        className={`grid grid-cols-8 border border-border w-full h-full ${isVisible ? "opacity-100" : "opacity-0"} transition-opacity duration-500 rounded-lg
         `}
       >
         {ranks.map((rank) =>
@@ -55,7 +56,7 @@ export default function SquareGuessBoard({ isVisible, highlightedSquares = [], s
                     isLightSquare(file, rank) ? "text-black" : "text-white"
                   }`}
                 >
-                  <span className={`${isVisible? "opacity-100":"opacity-0"} transition-opacity duration-500`}>{`${file.toUpperCase()}${rank}`}</span>
+                  <span className={`${isCoordinatesVisible? "opacity-100":"opacity-0"} transition-opacity duration-500`}>{`${file.toUpperCase()}${rank}`}</span>
                   {/* {isVisible && `${file.toUpperCase()} ${rank}`} */}
                 </span>
               </div>
@@ -64,10 +65,10 @@ export default function SquareGuessBoard({ isVisible, highlightedSquares = [], s
         )}
       </div>
 
-      {/* <div
+      <div
         className={`absolute top-0 left-0 w-full h-full bg-secondary transition-opacity duration-500
           ${isVisible ? "opacity-0 pointer-events-none" : "opacity-100"}`}
-      ></div> */}
+      ></div>
     </div>
   );
 }

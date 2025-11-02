@@ -11,10 +11,12 @@ import {
 import { ModeToggle } from "@/src/components/ui/mode-toggle";
 
 
+
 type Props = React.SVGProps<SVGSVGElement> & {
   className?: string;
 };
 
+//refactor
 function Logo({ className = "h-8 w-auto text-foreground", ...props }: Props) {
   return (
     <svg
@@ -65,7 +67,7 @@ export default function Navbar() {
                       <NavigationMenuLink
                         asChild
                       >
-                        <a className="font-bold text-lg"
+                        <a className="text-lg hover:bg-muted"
                           href={item.href}
                         >
                           {item.label}

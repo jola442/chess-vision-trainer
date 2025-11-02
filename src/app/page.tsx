@@ -4,20 +4,19 @@ import { motion } from "framer-motion";
 import { Button } from "@/src/components/ui/button";
 import {  
   Card,
-//   CardAction,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/src/components/ui/card";
-import { Badge } from "@/src/components/ui/badge";
+
 import Link from "next/link";
 import { Palette, Brain, FlaskConical } from "lucide-react";
 import Image from "next/image";
 import ChessArrows from "@/public/ChessArrows.png"
 import Blunder from "@/public/Blunder.jpeg"
 import Calculate from "@/public/Calculate.jpg"
+import { useMediaQuery } from "usehooks-ts";
+
 
 const process = [
   {
@@ -51,6 +50,8 @@ const fadeInUp = {
 }
 
 export default function LandingPage() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   return (
     <div className="page-container">
 <section className="relative flex flex-col items-center justify-center text-center flex-1 px-6 py-24 overflow-hidden h-3/4  lg:h-full">
@@ -132,7 +133,7 @@ export default function LandingPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{once:true, amount:1}}
-              transition={{ delay: i * 0.3, duration:1 }}
+              transition={{ delay: isMobile? 0: i * 0.3, duration:1 }}
             >
               <Card className="hover:shadow-lg transition-shadow duration-300 border-none lg:h-[275px] min-h-[35vh]"> 
                   <div className="relative top-4 left-5 mb-2 bg-muted w-fit p-3 rounded-xl">
@@ -159,7 +160,7 @@ export default function LandingPage() {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.2, // delay between each child
+        staggerChildren: 0.6,
       },
     },
   }}
